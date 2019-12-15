@@ -1,37 +1,34 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import './Movie.css';
 
-class Movie extends Component{
 
-    // propTypes를 추가하면 각각의 변수에 들어올 변수형을 체크, info 해줌
-    static propTypes = {
-        title : PropTypes.string.isRequired,
-        poster : PropTypes.string.isRequired
-    }
-    
-
-    render(){
-        return(
-        <div>
-            <MoviePoster poster={this.props.poster}/>
-            <h1>{this.props.title} </h1>
-        </div>
-        );
-    }
+//state가 없느 function (클래스대신에 사용할 수 있음)
+function Movie({title,poster}){
+    return(
+    <div>
+        <MoviePoster poster={poster}/>
+        <h1>{title} </h1>
+    </div>
+    )
 }
 
-class MoviePoster extends Component{
-
-    static propTypes = {
-        poster: PropTypes.string.isRequired
-    }
-    
-    render(){
-        return(
-            <img src={this.props.poster} alt={this.props.title}/>
-        );
-    }
+function MoviePoster({poster}){
+    return (
+        <img src={poster} alt="Movie Poster"/>
+    )
 }
+// function의 propType를 체크하는 법
+
+MoviePoster.propTypes = {
+    poster : PropTypes.string.isRequired
+}
+
+Movie.propTypes = {
+    title : PropTypes.string.isRequired,
+    poster : PropTypes.string.isRequired
+}
+
+
 
 export default Movie;
