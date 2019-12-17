@@ -1,68 +1,59 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
+import LinesEllipsis from 'react-lines-ellipsis'
 import './Movie.css';
-import LineEllipsis from 'react-lines-ellipsis'
 
-
-//state가 없느 function (클래스대신에 사용할 수 있음)
-function Movie({title,poster, genres, synopsis}){
-    return(
-    <div className="Movie">
-        <div className="Movie__Columns">
-            <MoviePoster poster={poster} title={title} alt={title}/>
-        </div>
-        <div className="Movie__Columns">
-            <h1>{title} </h1>
-            <div className="Movie__Genres">
-                {genres.map((genre,index) => <MovieGenre genre={genre} key={index}/>)}
+function Movie({title, poster, genres, synopsis}){
+    return (
+        <div className="Movie">
+            <div className="Movie__Column">
+                <MoviePoster poster={poster} alt={title} />
+            </div>   
+            <div className="Movie__Column">
+                <h1>{title}</h1>
+                <div className="Movie__Genres">
+                    {genres.map((genre, index) => <MovieGenre genre={genre} key={index} />)}
+                </div>
+                <div className="Movie__Synopsis">
+                <LinesEllipsis
+                    text={synopsis}
+                    maxLine='3'
+                    ellipsis='...'
+                    trimRight
+                    basedOn='letters'
+                    />   
+                </div>
             </div>
-            <p className="Movie__Synopsis">
-            <LineEllipsis 
-                text={synopsis}
-                maxLine='3'
-                ellipsis=' ...'
-                trimRight
-                basedOn='letters'
-            />
-                
-            </p>
         </div>
-        
-    </div>
     )
 }
 
 function MoviePoster({poster, alt}){
     return (
-        <img src={poster} title = {alt} alt={alt}/>
+        <img src={poster} alt={alt} title={alt} className="Movie__Poster" />
     )
 }
 
 function MovieGenre({genre}){
-    return(
+    return (
         <span className="Movie__Genre">{genre}</span>
     )
 }
 
-
-// function의 propType를 체크하는 법
+Movie.propTypes = {
+    title: PropTypes.string.isRequired,
+    poster: PropTypes.string.isRequired,
+    genres: PropTypes.array.isRequired,
+    synopsis: PropTypes.string.isRequired
+}
 
 MoviePoster.propTypes = {
-    title : PropTypes.string.isRequired,
-    poster : PropTypes.string.isRequired,
-    alt : PropTypes.string.isRequired
+    poster: PropTypes.string.isRequired,
+    alt: PropTypes.string.isRequired
 }
 
-Movie.propTypes = {
-    poster : PropTypes.string.isRequired,
-    title : PropTypes.string.isRequired,
-    genres :PropTypes.array.isRequired,
-    synopsis : PropTypes.string.isRequired
-}
-
-MovieGenre.propTypes= {
+MovieGenre.propTypes ={
     genre: PropTypes.string.isRequired
 }
 
-
-export default Movie;
+export default Movie
