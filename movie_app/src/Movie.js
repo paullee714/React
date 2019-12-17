@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import './Movie.css';
+import LineEllipsis from 'react-lines-ellipsis'
 
 
 //state가 없느 function (클래스대신에 사용할 수 있음)
@@ -16,7 +17,14 @@ function Movie({title,poster, genres, synopsis}){
                 {genres.map((genre,index) => <MovieGenre genre={genre} key={index}/>)}
             </div>
             <p className="Movie__Synopsis">
-                {synopsis}
+            <LineEllipsis 
+                text={synopsis}
+                maxLine='3'
+                ellipsis=' ...'
+                trimRight
+                basedOn='letters'
+            />
+                
             </p>
         </div>
         

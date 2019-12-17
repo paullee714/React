@@ -27,7 +27,7 @@ class App extends Component{
   }
 
   _callApi = () => {
-    return fetch("https://yts.lt/api/v2/list_movies.json?sort_bt=rating")
+    return fetch("https://yts.lt/api/v2/list_movies.json?sort_bt=download_count")
     .then(response => response.json())
     .then(json => json.data.movies)
     .catch(err => console.log(err)) // modern javascript
@@ -51,10 +51,14 @@ class App extends Component{
   }
 
   render(){
+    const {movies} = this.state;
     return(
-      <div className="App">
-        {this.state.movies ? this._renderMovies() : 'Loading...'}
+      <div className ={movies ? "App" : "App--loading"}>
+        {movies ? this._renderMovies() : "Loading"}
       </div>
+      // <div className="App">
+      //   {this.state.movies ? this._renderMovies() : 'Loading...'}
+      // </div>
     );
   }
 }
