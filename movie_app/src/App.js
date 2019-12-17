@@ -16,9 +16,20 @@ class App extends Component{
   }
 
   componentDidMount(){
-    fetch("https://yts.lt/api/v2/list_movies.json?sort_bt=rating")
+    this._getMovies();
+  }
+  
+  _getMovies = async () => { //async : 끝을 기다리지 않고 다른것을 시작 할 수 있게 해 줌
+    const movies = await this._callApi()
+    this.setState({
+      movies
+    })
+  }
+
+  _callApi = () => {
+    return fetch("https://yts.lt/api/v2/list_movies.json?sort_bt=rating")
     .then(response => response.json())
-    .then(json => console.log(json))
+    .then(json => json.data.movies)
     .catch(err => console.log(err)) // modern javascript
     // old javascript
     // .catch(functionn(err){
@@ -27,8 +38,9 @@ class App extends Component{
   }
 
   _renderMovies = () =>{
-    const movies = this.state.movies.map((movie, index) => {
-          return <Movie title={movie.title} poster = {movie.poster} key={index}/>
+    const movies = this.state.movies.map(movie=> {
+      console.log(movie)
+          return <Movie title={movie.title} poster = {movie.medium_cover_image} key={movie.id} />
     })
     return movies
   }
